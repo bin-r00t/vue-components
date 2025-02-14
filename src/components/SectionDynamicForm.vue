@@ -19,8 +19,6 @@ watchPostEffect(() => {
     formData.value[item.model] = undefined;
   });
 });
-// computed + JSON.stringify will not work!
-// const displayForm = computed(() => JSON.stringify(formData.value) !== "{}");
 const displayForm = computed(() => Object.keys(formData.value).length > 0);
 
 const handleSubmit = () => {
@@ -33,28 +31,21 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div
-    class="dynamic-form"
-    style="padding: 20px; border: 1px solid #ccc; margin: 20px"
-  >
-    <h1>Dynamic Form</h1>
-    <pre>
+  <div class="dynamic-form">
+    <!-- <pre>
         <code>
             {{ props.schema }}
         </code>
-    </pre>
-
-    <hr />
-    <p>{{ displayForm }}</p>
-    <p>{{ Object.keys(formData).length }}</p>
+    </pre> -->
     <a-form
       v-if="displayForm"
       ref="form"
       :model="formData"
-      :label-col="{ span: 4 }"
-      :wrapper-col="{ span: 14 }"
+      :wrapper-col="{ span: 20 }"
+      label-align="left"
+      layout="vertical"
     >
-      <a-row>
+      <a-row class="space-y-12">
         <a-col :span="cfg.span" v-for="cfg in schema.children" :key="cfg.model">
           <a-form-item :name="cfg.model" :label="cfg.label" :rules="cfg.rules">
             <component
@@ -73,3 +64,9 @@ const handleSubmit = () => {
     </a-form>
   </div>
 </template>
+
+<style scoped>
+.space-y-12.ant-row > .ant-col {
+  margin-top: 12px;
+}
+</style>
