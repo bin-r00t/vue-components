@@ -17,7 +17,7 @@ console.log("cfg", props.cfg);
 
 <template>
   <div class="section-item">
-    <h1>{{ title }}</h1>
+    <h1 :title="title">{{ title }}</h1>
     <component :is="components[cfg.component]" v-bind="cfg.bind" />
   </div>
 </template>

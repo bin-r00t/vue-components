@@ -40,6 +40,13 @@ onMounted(() => {
 
   moveTo(scrollIndicator.value, tabs[0]);
 });
+
+function handleClickTab(tab, index) {
+  moveTo(scrollIndicator.value, index);
+  document.querySelector(`[title="${tab.label}"]`).scrollIntoView({
+    behavior: "smooth",
+  });
+}
 </script>
 
 <template>
@@ -52,7 +59,7 @@ onMounted(() => {
         :id="`tab-${tab.id}`"
         :class="{ active: index === activeTab }"
       >
-        <a @click="moveTo(scrollIndicator, index)">{{ tab.label }}</a>
+        <a @click="handleClickTab(tab, index)">{{ tab.label }}</a>
       </li>
     </ul>
   </div>
