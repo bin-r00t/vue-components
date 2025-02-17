@@ -2,6 +2,7 @@
 import { provide, ref } from "vue";
 import SectionForm from "./components/SectionForm.vue";
 import { AvailableComponents } from "@/utils/global.config.js";
+import incomeSchema from "./incomeSchema";
 
 const schema = ref({
   name: "sectionForm",
@@ -25,127 +26,20 @@ const schema = ref({
       id: 2,
     },
   ],
+  needsValidate: incomeSchema.needsValidate,
+  urls: {
+    add: "http://localhost:1337/api/incomes",
+    update: "http://localhost:1337/api/incomes",
+    delete: "http://localhost:1337/api/incomes",
+    disconnect: "http://localhost:1337/api/incomes",
+  },
   contractDetail: {
-    type: "custom",
+    type: "form",
     component: AvailableComponents.DynamicForm,
     bind: {
       schema: {
         name: "testForm",
-        children: [
-          {
-            label: "合同编号",
-            model: "name",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input name" }],
-            props: {
-              placeholder: "Please input name",
-              "allow-clear": true,
-            },
-          },
-          {
-            label: "合同标题",
-            model: "age",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input age" }],
-            props: {
-              placeholder: "Please input age",
-              "allow-clear": true,
-            },
-          },
-          {
-            label: "合同金额",
-            model: "age",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input age" }],
-            props: {
-              placeholder: "Please input age",
-              "allow-clear": true,
-            },
-          },
-          {
-            label: "实际金额",
-            model: "age",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input age" }],
-            props: {
-              placeholder: "Please input age",
-              "allow-clear": true,
-            },
-          },
-          {
-            label: "已关联金额（自动计算）",
-            model: "age",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input age" }],
-            props: {
-              placeholder: "Please input age",
-              "allow-clear": true,
-            },
-          },
-          {
-            label: "部门名称",
-            model: "age",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input age" }],
-            props: {
-              placeholder: "Please input age",
-              "allow-clear": true,
-            },
-          },
-          {
-            label: "签订日期",
-            model: "age",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input age" }],
-            props: {
-              placeholder: "Please input age",
-              "allow-clear": true,
-            },
-          },
-          {
-            label: "合同甲方主体",
-            model: "email",
-            type: "Input",
-            span: 12,
-            rules: [{ type: "email", message: "Email is not valid" }],
-            props: {
-              placeholder: "Please input email",
-              "allow-clear": true,
-            },
-            htmlProps: {
-              type: "email",
-            },
-          },
-          {
-            label: "合同乙方主体",
-            model: "age",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input age" }],
-            props: {
-              placeholder: "Please input age",
-              "allow-clear": true,
-            },
-          },
-          {
-            label: "关联项目",
-            model: "age",
-            type: "Input",
-            span: 12,
-            rules: [{ required: true, message: "Please input age" }],
-            props: {
-              placeholder: "Please input age",
-              "allow-clear": true,
-            },
-          },
-        ],
+        children: incomeSchema.incomeSchema,
       },
     },
   },
@@ -177,18 +71,12 @@ const schema = ref({
           ],
         },
       },
-      urls: {
-        add: "https://jsonplaceholder.typicode.com/posts",
-        update: "https://jsonplaceholder.typicode.com/posts",
-        delete: "https://jsonplaceholder.typicode.com/posts",
-        disconnect: "https://jsonplaceholder.typicode.com/posts",
-      },
       actions: [
         {
-          label: '删除',
-          type: 'danger',
-          action: 'delete', // 关联urls, urls.delete
-          confirm: true
+          label: "删除",
+          type: "danger",
+          action: "delete", // 关联urls, urls.delete
+          confirm: true,
         },
         {
           label: "取消关联",
@@ -226,9 +114,26 @@ const schema = ref({
   },
 });
 
-provide("mode", 1 ? "editable" :"readOnly")
+provide("mode", 1 ? "editable" : "readOnly");
+
+const formRef = ref(null);
+
+function handleSubmit() {
+  formRef.value.onSubmit();
+}
 </script>
 
 <template>
-  <SectionForm :schema="schema" />
+  <SectionForm
+    :schema="schema"
+    ref="formRef"
+    initialUrl="http://localhost:1337/api/incomes/du8nhosl1428zy0diu5373pe"
+    createUrl="http://localhost:1337/api/incomes"
+    updateUrl="http://localhost:1337/api/incomes/du8nhosl1428zy0diu5373pe"
+  />
+  <a-row style="padding: 20px 0">
+    <a-col :span="24" style="text-align: right">
+      <a-button type="primary" @click="handleSubmit">提交</a-button>
+    </a-col>
+  </a-row>
 </template>

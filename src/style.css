@@ -39,3 +39,7 @@ body {
 .absolute {
   position: absolute;
 }
+
+.ant-picker {
+  width: 100% !important;
+}
