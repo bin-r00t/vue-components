@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { provide, ref } from "vue";
 import SectionForm from "./components/SectionForm.vue";
 import { AvailableComponents } from "@/utils/global.config.js";
 
@@ -158,6 +158,8 @@ const schema = ref({
     component: AvailableComponents.AttachmentList,
   },
 });
+
+provide("mode", 1 ? "editable" :"readOnly")
 </script>
 
 <template>

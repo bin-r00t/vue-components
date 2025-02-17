@@ -1,5 +1,5 @@
 <script setup>
-import { provide, ref } from "vue";
+import { inject, provide, ref } from "vue";
 import SectionTabs from "./SectionTabs.vue";
 import SectionItem from "./SectionItem.vue";
 
@@ -35,6 +35,8 @@ provide("form", {
   },
 });
 
+const mode = inject("mode");
+
 defineExpose({
   onSubmit,
   onCancel,
@@ -45,7 +47,7 @@ defineExpose({
   <div class="section-form">
     <h1>SectionForm</h1>
     <SectionTabs :tabs="schema.sections" @click="handleTabChange" />
-    <a-form :model="formModel">
+    <a-form :model="formModel" :disabled="mode === 'readOnly'">
       <div class="section-form__main">
         <SectionItem
           v-for="sec in schema.sections"
