@@ -30,3 +30,12 @@ body {
   background: #e0e0e0;
   padding: 20px;
 }
+
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}

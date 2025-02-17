@@ -152,6 +152,73 @@ const schema = ref({
   relatedContractList: {
     type: "custom",
     component: AvailableComponents.SectionTable,
+    bind: {
+      addButtonText: "新增关联合同",
+      addForm: {
+        schema: {
+          name: "testForm",
+          children: [
+            {
+              label: "合同编号",
+              model: "name",
+              type: "Input",
+              span: 12,
+              rules: [{ required: true, message: "Please input name" }],
+              props: {
+                placeholder: "Please input name",
+              },
+            },
+            {
+              label: "合同标题",
+              model: "age",
+              type: "Input",
+              span: 12,
+            },
+          ],
+        },
+      },
+      urls: {
+        add: "https://jsonplaceholder.typicode.com/posts",
+        update: "https://jsonplaceholder.typicode.com/posts",
+        delete: "https://jsonplaceholder.typicode.com/posts",
+        disconnect: "https://jsonplaceholder.typicode.com/posts",
+      },
+      actions: [
+        {
+          label: '删除',
+          type: 'danger',
+          action: 'delete', // 关联urls, urls.delete
+          confirm: true
+        },
+        {
+          label: "取消关联",
+          type: "default",
+          action: "disconnect", // 关联urls, urls.disconnect
+          confirm: true,
+        },
+      ],
+      columns: [
+        {
+          title: "合同编号",
+          dataIndex: "name",
+        },
+        {
+          title: "合同标题",
+          dataIndex: "age",
+        },
+        {
+          title: "操作",
+          dataIndex: "action",
+          width: 180,
+        },
+      ],
+      dataSource: [
+        {
+          id: 1,
+          name: "合同编号",
+        },
+      ],
+    },
   },
   attachmentList: {
     type: "custom",
